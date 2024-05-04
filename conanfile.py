@@ -2,8 +2,11 @@ from conan import ConanFile
 from conan.tools.cmake import CMakeToolchain, CMake, cmake_layout, CMakeDeps
 
 
+# NOTE that "require_compb" is ONLY an option for helping to run the tests,
+# and to switch and demonstrate the behaviour that I'm testing.
+
 class ThelibRecipe(ConanFile):
-    name = "test_private_component_lib"
+    name = "test_separate_component_lib"
     version = "1.0"
     package_type = "library"
 
@@ -16,8 +19,8 @@ class ThelibRecipe(ConanFile):
 
     # Binary configuration
     settings = "os", "compiler", "build_type", "arch"
-    options = {"shared": [True, False], "fPIC": [True, False], "require_private": [True,False]}
-    default_options = {"shared": False, "fPIC": True, "require_private": True}
+    options = {"shared": [True, False], "fPIC": [True, False], "require_compb": [True,False]}
+    default_options = {"shared": False, "fPIC": True, "require_compb": True}
 
     # Sources are located in the same place as this recipe, copy them to the recipe
     exports_sources = "CMakeLists.txt", "src/*", "include/*"
@@ -49,11 +52,11 @@ class ThelibRecipe(ConanFile):
         cmake.install()
 
     def package_info(self):
-        self.cpp_info.components["private_function"].libs = ["private_function"]
-        self.cpp_info.components["private_function"].includedirs = ["include/private_component"]
+        self.cpp_info.components["compb_function"].libs = ["compb_function"]
+        self.cpp_info.components["compb_function"].includedirs = ["include/compb"]
 
-        self.cpp_info.components["public_function"].libs = ["public_function"]
-        self.cpp_info.components["public_function"].includedirs = ["include/public_component"]
+        self.cpp_info.components["compa_function"].libs = ["compa_function"]
+        self.cpp_info.components["compa_function"].includedirs = ["include/compa"]
 
-        if self.options.require_private:
-            self.cpp_info.components["public_function"].requires = ["private_function"]
+        if self.options.require_compb:
+            self.cpp_info.components["compa_function"].requires = ["compb_function"]

@@ -3,34 +3,34 @@ project(thelib CXX)
 
 ##############
 
-add_library(private_function src/private_function.cpp)
-target_include_directories(private_function PUBLIC "include/private_component")
+add_library(compb_function src/compb_function.cpp)
+target_include_directories(compb_function PUBLIC "include/compb")
 
-set_target_properties(private_function PROPERTIES PUBLIC_HEADER "include/private_component/private_function.h")
-set_target_properties(private_function PROPERTIES PUBLIC_HEADER "include/private_component/private_function_failure.h")
+set_target_properties(compb_function PROPERTIES PUBLIC_HEADER "include/compb/compb_function.h")
+set_target_properties(compb_function PROPERTIES PUBLIC_HEADER "include/compb/compb_function_failure.h")
 
-install(TARGETS private_function
+install(TARGETS compb_function
       PUBLIC_HEADER
-         DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/private_component"
+         DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/compb"
       INCLUDES
-         DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/private_component"
+         DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/compb"
       )
 
 ##############
 
-add_library(public_function src/public_function.cpp)
-target_include_directories(public_function PUBLIC "include/public_component")
+add_library(compa_function src/compa_function.cpp)
+target_include_directories(compa_function PUBLIC "include/compa")
 
-set_target_properties(public_function PROPERTIES PUBLIC_HEADER "include/public_component/public_function.h")
+set_target_properties(compa_function PROPERTIES PUBLIC_HEADER "include/compa/compa_function.h")
 
-install(TARGETS public_function
+install(TARGETS compa_function
       PUBLIC_HEADER
-         DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/public_component"
+         DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/compa"
       INCLUDES
-         DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/public_component"
+         DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/compa"
       )
 
-target_link_libraries(public_function
-   PRIVATE
-      private_function
+target_link_libraries(compa_function
+   compb
+      compb_function
      )

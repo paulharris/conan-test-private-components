@@ -1,3 +1,3 @@
-A consumer that requires the "public" component should NOT be able to include the "private" component headers.
+A consumer that requires the "compa" component should NOT be able to include the "compb" component headers.
 
-But, a consumer has to link both public and private static libs for a successful link.
+But, a consumer has to link both compa and compb static libs for a successful link.
